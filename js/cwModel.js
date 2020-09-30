@@ -3,6 +3,7 @@ let fs = require("fs");
 let configObj = JSON.parse(fs.readFileSync("./config.json"));
 let cwIp = configObj.url;
 let cwUrl = "http://" + cwIp + ":5201" || "http://127.0.0.1:5201";
+let globalTimeOut = 2000;
 $("#basic-url").val(cwIp);
 var button_width = 120;
 ipcRenderer.on("cwBtnActivate", function (event, grid_names, grid_value) {
@@ -23,6 +24,12 @@ $("#cwRefreshBtn").on("click", function () {
   Get_Grid_Names();
 });
 
+function resetAll() {
+  $("#select_box").html("<select id='drop'></select>");
+  $("#grid_view").html("");
+  $("#cwRefreshBtn").button("reset");
+}
+
 function Activate_Button(grid_names, grid_value) {
   var activate_grid_button_cmd = {
     action: "activate_grid_cell",
@@ -34,11 +41,17 @@ function Activate_Button(grid_names, grid_value) {
     url: cwUrl,
     type: "POST",
     data: JSON.stringify(activate_grid_button_cmd),
+    timeout: globalTimeOut,
     dataType: "json",
     async: true,
     contentType: "application/json; charset=utf-8",
     success: function (resp) {
       console.log("Send To CW: " + JSON.stringify(activate_grid_button_cmd));
+    },
+    error: function (error) {
+      resetAll();
+      console.log(error);
+      return;
     },
   });
 }
@@ -139,6 +152,7 @@ function Get_Button_Names(grid_row, grid_names) {
     url: cwUrl,
     type: "POST",
     data: JSON.stringify(get_grid_button_cmd),
+    timeout: globalTimeOut,
     dataType: "json",
     async: true,
     contentType: "application/json; charset=utf-8",
@@ -181,6 +195,11 @@ function Get_Button_Names(grid_row, grid_names) {
       fontSize = 12 * (value / 124);
       $(".button").css({ "font-size": fontSize });
     },
+    error: function (error) {
+      resetAll();
+      console.log(error);
+      return;
+    },
   });
 }
 
@@ -195,6 +214,7 @@ function Get_Grid_Names() {
     url: cwUrl,
     type: "POST",
     data: JSON.stringify(get_grid_names_cmd),
+    timeout: globalTimeOut,
     dataType: "json",
     async: true,
     contentType: "application/json; charset=utf-8",
@@ -211,6 +231,11 @@ function Get_Grid_Names() {
       } else {
         Add_List("No Grid Found", "0");
       }
+    },
+    error: function (error) {
+      resetAll();
+      console.log(error);
+      return;
     },
   });
 }
