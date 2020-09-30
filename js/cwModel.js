@@ -25,6 +25,7 @@ $("#cwRefreshBtn").on("click", function () {
 });
 
 function resetAll() {
+  ipcRenderer.send("CWShortCutUnRegister");
   $("#select_box").html("<select id='drop'></select>");
   $("#grid_view").html("");
   $("#cwRefreshBtn").button("reset");
@@ -94,9 +95,9 @@ function Button_Init(
     ipcRenderer.send("CWShortCutRegister", grid_key, grid_names, grid_value);
 
     keys = grid_key.replace(",", " ");
-    Mousetrap.bind(keys.toString().toLowerCase(), function () {
-      Activate_Button(grid_names, grid_value);
-    });
+    // Mousetrap.bind(keys.toString().toLowerCase(), function () {
+    //   Activate_Button(grid_names, grid_value);
+    // });
   }
   $("#cwRefreshBtn").button("reset");
 }
