@@ -54,32 +54,19 @@ app.on("ready", function () {
     let keys = grid_key.split(",");
     keys.forEach(function (key, i) {
       let lastKey = key.split("+")[key.split("+").length - 1];
-      console.log(lastKey);
       if (parseInt(lastKey) > 0 && parseInt(lastKey) < 10) {
         let fixKey = "";
         for (let index = 0; index < key.split("+").length - 1; index++) {
           fixKey = fixKey + key.split("+")[index] + "+";
         }
-        console.log(fixKey);
         keys[i] = fixKey + "num" + lastKey;
       }
     });
-    console.log(keys);
-    globalShortcut.registerAll(keys, function () {
-      win.webContents.send("cwBtnActivate", grid_names, grid_value);
+    keys.forEach(function (key) {
+      globalShortcut.register(key, function () {
+        win.webContents.send("cwBtnActivate", grid_names, grid_value);
+      });
     });
-  });
-  ipc.on("configRefresh", function () {
-    win.webContents.send("configRefresh", 1);
-  });
-  ipc.on("selectWarning", function (event, i) {
-    win.webContents.send("selectWarning", i);
-  });
-  ipc.on("generateSuccess", function () {
-    win.webContents.send("generateSuccess", 1);
-  });
-  ipc.on("getError", function () {
-    win.webContents.send("getError", 1);
   });
 });
 
