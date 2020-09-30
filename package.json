@@ -1,0 +1,35 @@
+{
+  "name": "dota2-overlay-manager",
+  "productName": "Dota2 Overlay",
+  "description": "Make Your Dota2 Event Higher And Easily",
+  "keywords": [
+    "dota2",
+    "data",
+    "event",
+    "stream",
+    "overlay"
+  ],
+  "main": "./main.js",
+  "version": "0.2.0",
+  "author": "wuXin",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-packager . Dota2-Overlay-Manager --win --out ./Dota2-Overlay-Manager --arch=x64 --unpack * --app-version=0.2.0 --overwrite --icon=DOM.ico",
+    "rebuild": "electron-rebuild -f -w yourmodule"
+  },
+  "devDependencies": {
+    "electron": "^5.0.13",
+    "electron-packager": "^15.1.0",
+    "electron-rebuild": "^2.0.0",
+    "electron-reload": "^1.5.0"
+  },
+  "dependencies": {
+    "electron-drag": "^2.0.0",
+    "format-json-pretty": "^1.0.1",
+    "json-format": "^1.0.1",
+    "node-xlsx": "^0.15.0",
+    "request": "^2.88.2",
+    "win-mouse": "^2.0.0",
+    "ws": "^7.3.1"
+  }
+}
