@@ -1,13 +1,13 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, globalShortcut } = require("electron");
 let ipc = require("electron").ipcMain;
 // 保持对window对象的全局引用，如果不这么做的话，当JavaScript对象被
 // 垃圾回收的时候，window对象将会自动的关闭
 let win;
 
-require("electron-reload")(__dirname, {
-  // Note that the path to electron may vary according to the main file
-  electron: require(`${__dirname}/node_modules/electron`),
-});
+// require("electron-reload")(__dirname, {
+//   // Note that the path to electron may vary according to the main file
+//   electron: require(`${__dirname}/node_modules/electron`),
+// });
 
 function createWindow() {
   // 创建浏览器窗口。
@@ -16,9 +16,7 @@ function createWindow() {
     height: 1000,
     minWidth: 850,
     minHeight: 1000,
-    maxHeight: 850,
-    maxWidth: 1000,
-    frame: false,
+    frame: true,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
@@ -44,20 +42,21 @@ app.allowRendererProcessReuse = false;
 // 部分 API 在 ready 事件触发后才能使用。
 app.on("ready", createWindow);
 app.on("ready", function () {
-  ipc.on("min", function () {
-    win.minimize();
+  ipc.on("CWShortCutUnRegister", function () {
+    globalShortcut.unregisterAll();
   });
-  // win.webContents.send('topBarDrag',drag);
-  ipc.on("max", function () {
-    if (win.isMaximized()) {
-      win.unmaximize();
-    } else {
-      win.maximize();
-    }
-  });
-  ipc.on("close", function () {
-    win.webContents.send("record");
-    win.close();
+  ipc.on("CWShortCutRegister", function (
+    event,
+    grid_key,
+    grid_names,
+    grid_value
+  ) {
+    let keys = grid_key.split(",");
+    keys.forEach(function (key) {
+      globalShortcut.register(key, function () {
+        win.webContents.send("cwBtnActivate", grid_names, grid_value);
+      });
+    });
   });
   ipc.on("configRefresh", function () {
     win.webContents.send("configRefresh", 1);

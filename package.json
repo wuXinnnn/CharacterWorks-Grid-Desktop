@@ -1,20 +1,20 @@
 {
-  "name": "dota2-overlay-manager",
-  "productName": "Dota2 Overlay",
-  "description": "Make Your Dota2 Event Higher And Easily",
+  "name": "charactorworks-grid-desktop",
+  "productName": "CharactorWorks Grid Desktop",
+  "description": "Register Windows Global Shortcut for CW",
   "keywords": [
-    "dota2",
-    "data",
-    "event",
-    "stream",
-    "overlay"
+    "CharactorWorks",
+    "CW",
+    "Global Shortcut",
+    "desktop",
+    "windows"
   ],
   "main": "./main.js",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "author": "wuXin",
   "scripts": {
     "start": "electron .",
-    "pack": "electron-packager . Dota2-Overlay-Manager --win --out ./Dota2-Overlay-Manager --arch=x64 --unpack * --app-version=0.2.0 --overwrite --icon=DOM.ico",
+    "pack": "electron-packager . CharactorWorks-Grid-Desktop --win --out ./CharactorWorks-Grid-Desktop --arch=x64 --unpack * --app-version=0.2.0 --overwrite --icon=CGD.ico",
     "rebuild": "electron-rebuild -f -w yourmodule"
   },
   "devDependencies": {
@@ -23,13 +23,5 @@
     "electron-rebuild": "^2.0.0",
     "electron-reload": "^1.5.0"
   },
-  "dependencies": {
-    "electron-drag": "^2.0.0",
-    "format-json-pretty": "^1.0.1",
-    "json-format": "^1.0.1",
-    "node-xlsx": "^0.15.0",
-    "request": "^2.88.2",
-    "win-mouse": "^2.0.0",
-    "ws": "^7.3.1"
-  }
+  "dependencies": {}
 }
